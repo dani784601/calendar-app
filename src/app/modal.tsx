@@ -1,4 +1,5 @@
 import { schedulesAtom, selectedDateAtom } from "@/src/store/atoms";
+import { formatYmdLocal } from "@/src/utils/date";
 import { useRouter } from "expo-router";
 import { useAtom } from "jotai";
 import { useState } from "react";
@@ -13,7 +14,7 @@ export default function Modal() {
 
   const handleSave = () => {
     const newId = (schedules[schedules.length - 1]?.id ?? 0) + 1;
-    const yyyyMmDd = (selectedDate ?? new Date()).toISOString().slice(0, 10);
+    const yyyyMmDd = formatYmdLocal(selectedDate ?? new Date());
     setSchedules([
       ...schedules,
       { id: newId, title: title || "새 일정", description, date: yyyyMmDd },
@@ -25,7 +26,7 @@ export default function Modal() {
     <View style={styles.container}>
       <Text style={styles.title}>새 일정 추가</Text>
       <Text style={styles.subTitle}>
-        선택 날짜: {(selectedDate ?? new Date()).toISOString().slice(0, 10)}
+        선택 날짜: {formatYmdLocal(selectedDate ?? new Date())}
       </Text>
       <TextInput
         placeholder="제목"

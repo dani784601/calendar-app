@@ -2,6 +2,7 @@ import Calendar from "@/src/components/calendar/Calendar";
 import ScheduleList from "@/src/components/schedule/ScheduleList";
 import { schedulesAtom, selectedDateAtom } from "@/src/store/atoms";
 import { ScheduleDate } from "@/src/types/ScheduleDate";
+import { formatYmdLocal } from "@/src/utils/date";
 import { useRouter } from "expo-router";
 import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
@@ -20,7 +21,7 @@ export default function CalendarBoard() {
       return;
     }
 
-    const yyyyMmDd = selectedDate.toISOString().slice(0, 10); // 'YYYY-MM-DD'
+    const yyyyMmDd = formatYmdLocal(selectedDate);
 
     const filtered = schedules.filter((schedule) => schedule.date === yyyyMmDd);
     setSelectedSchedule(filtered);

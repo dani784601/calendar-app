@@ -1,5 +1,6 @@
 import { schedulesAtom, selectedScheduleAtom } from "@/src/store/atoms";
 import type { ScheduleDate } from "@/src/types/ScheduleDate";
+import { formatYmdLocal } from "@/src/utils/date";
 import { useRouter } from "expo-router";
 import { useAtom } from "jotai";
 import { Button, StyleSheet, Text, View } from "react-native";
@@ -23,9 +24,12 @@ export default function ScheduleCard({
     router.push("/edit-modal");
   };
 
+  const displayDate =
+    date && date.length === 10 ? date : formatYmdLocal(new Date(date));
+
   return (
     <View style={styles.container}>
-      <Text style={styles.date}>{date}</Text>
+      <Text style={styles.date}>{displayDate}</Text>
       <Text style={styles.title}>{title}</Text>
       <Text style={styles.description}>{description}</Text>
       <View style={styles.actions}>

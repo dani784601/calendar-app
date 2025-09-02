@@ -1,4 +1,5 @@
 import { schedulesAtom, selectedScheduleAtom } from "@/src/store/atoms";
+import { formatYmdLocal } from "@/src/utils/date";
 import { useRouter } from "expo-router";
 import { useAtom } from "jotai";
 import { useState } from "react";
@@ -24,7 +25,7 @@ export default function EditModal() {
 
   const handleSave = () => {
     if (!selectedSchedule) return router.back();
-    const yyyyMmDd = date.toISOString().slice(0, 10);
+    const yyyyMmDd = formatYmdLocal(date);
     setSchedules(
       schedules.map((s) =>
         s.id === selectedSchedule.id

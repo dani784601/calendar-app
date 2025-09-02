@@ -1,4 +1,5 @@
 import { schedulesAtom, selectedDateAtom } from "@/src/store/atoms";
+import { formatYmdLocal } from "@/src/utils/date";
 import { useAtom } from "jotai";
 import { View } from "react-native";
 import DayCell from "./DayCell";
@@ -35,8 +36,7 @@ export default function CalendarGrid({
           isWeekend={date.getDay() === 0 || date.getDay() === 6}
           isOutsideMonth={date.getMonth() !== currentDate.getMonth()}
           schedulesCount={
-            schedules.filter((s) => s.date === date.toISOString().slice(0, 10))
-              .length
+            schedules.filter((s) => s.date === formatYmdLocal(date)).length
           }
           onPress={onPress}
         />
