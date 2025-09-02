@@ -5,7 +5,7 @@ import { schedulesAtom } from "../../store/atoms";
 export default function ScheduleBoard() {
   const [schedules, setSchedules] = useAtom(schedulesAtom);
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{ flex: 1 }}>
       <ScheduleList schedules={schedules} />
     </SafeAreaView>
   );
