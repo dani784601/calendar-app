@@ -1,6 +1,12 @@
 import { ScheduleDate } from "@/src/types/ScheduleDate";
 import { useCallback } from "react";
-import { FlatList } from "react-native";
+import {
+  FlatList,
+  ListRenderItemInfo,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import ScheduleCard from "./ScheduleCard";
 
 export default function ScheduleList({
@@ -9,14 +15,18 @@ export default function ScheduleList({
   schedules: ScheduleDate[];
 }) {
   const renderItem = useCallback(
-    ({ item }: { item: ScheduleDate }) => (
-      <ScheduleCard
-        id={item.id}
-        title={item.title}
-        date={item.date}
-        description={item.description}
-      />
-    ),
+    ({ item }: ListRenderItemInfo<ScheduleDate>) => {
+      return (
+        <View style={styles.cardWrapper}>
+          <ScheduleCard
+            id={item.id}
+            title={item.title}
+            date={item.date}
+            description={item.description}
+          />
+        </View>
+      );
+    },
     []
   );
 
@@ -37,6 +47,45 @@ export default function ScheduleList({
       maxToRenderPerBatch={10}
       windowSize={10}
       initialNumToRender={10}
+      ItemSeparatorComponent={() => <View style={styles.separator} />}
+      ListHeaderComponent={() => (
+        <View style={styles.header}>
+          <Text style={styles.headerTitle}>오늘의 일정</Text>
+        </View>
+      )}
+      ListFooterComponent={() => <View style={styles.footer} />}
+      contentContainerStyle={styles.container}
     />
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    paddingHorizontal: 16,
+    paddingBottom: 24,
+  },
+  header: {
+    paddingHorizontal: 4,
+    paddingVertical: 12,
+  },
+  headerTitle: {
+    fontSize: 16,
+    fontWeight: "700",
+  },
+  cardWrapper: {
+    borderRadius: 12,
+    backgroundColor: "#fff",
+    shadowColor: "#000",
+    shadowOpacity: 0.05,
+    shadowRadius: 8,
+    shadowOffset: { width: 0, height: 2 },
+    elevation: 2,
+    overflow: "hidden",
+  },
+  separator: {
+    height: 12,
+  },
+  footer: {
+    height: 12,
+  },
+});

@@ -1,7 +1,8 @@
-import { schedulesAtom } from "@/src/store/atoms";
+import { schedulesAtom, selectedScheduleAtom } from "@/src/store/atoms";
 import type { ScheduleDate } from "@/src/types/ScheduleDate";
+import { useRouter } from "expo-router";
 import { useAtom } from "jotai";
-import { Button, Text, View } from "react-native";
+import { Button, StyleSheet, Text, View } from "react-native";
 
 export default function ScheduleCard({
   id,
@@ -10,17 +11,51 @@ export default function ScheduleCard({
   description = "",
 }: ScheduleDate) {
   const [schedules, setSchedules] = useAtom(schedulesAtom);
+  const [, setSelectedSchedule] = useAtom(selectedScheduleAtom);
+  const router = useRouter();
 
   const handleDelete = () => {
     setSchedules(schedules.filter((schedule) => schedule.id !== id));
   };
 
+  const handleEdit = () => {
+    setSelectedSchedule({ id, title, date, description });
+    router.push("/edit-modal");
+  };
+
   return (
-    <View style={{ margin: 20, flex: 1 }}>
-      <Text>{date}</Text>
-      <Text>{title}</Text>
-      <Text>{description}</Text>
-      <Button title="삭제" onPress={handleDelete} />
+    <View style={styles.container}>
+      <Text style={styles.date}>{date}</Text>
+      <Text style={styles.title}>{title}</Text>
+      <Text style={styles.description}>{description}</Text>
+      <View style={styles.actions}>
+        <Button title="수정" onPress={handleEdit} />
+        <Button title="삭제" onPress={handleDelete} />
+      </View>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    margin: 20,
+    flex: 1,
+  },
+  date: {
+    color: "#666",
+    marginBottom: 4,
+  },
+  title: {
+    fontSize: 16,
+    fontWeight: "700",
+    marginBottom: 4,
+  },
+  description: {
+    color: "#333",
+  },
+  actions: {
+    flexDirection: "row",
+    columnGap: 12,
+    marginTop: 8,
+  },
+});
