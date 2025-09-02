@@ -1,4 +1,4 @@
-import { selectedDateAtom } from "@/src/store/atoms";
+import { schedulesAtom, selectedDateAtom } from "@/src/store/atoms";
 import { useAtom } from "jotai";
 import { View } from "react-native";
 import DayCell from "./DayCell";
@@ -13,6 +13,7 @@ export default function CalendarGrid({
   onPress?: (date: Date) => void;
 }) {
   const [selectedDate] = useAtom(selectedDateAtom);
+  const [schedules] = useAtom(schedulesAtom);
 
   const isSameYmd = (a?: Date | null, b?: Date | null) => {
     if (!a || !b) return false;
@@ -33,6 +34,10 @@ export default function CalendarGrid({
           isToday={isSameYmd(date, currentDate)}
           isWeekend={date.getDay() === 0 || date.getDay() === 6}
           isOutsideMonth={date.getMonth() !== currentDate.getMonth()}
+          schedulesCount={
+            schedules.filter((s) => s.date === date.toISOString().slice(0, 10))
+              .length
+          }
           onPress={onPress}
         />
       ))}

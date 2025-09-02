@@ -6,7 +6,7 @@ import {
 import { useRouter } from "expo-router";
 import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
-import { Text, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import CalendarGrid from "./CalendarGrid";
 
 type NewScheduleDefaults = { title: string; description?: string };
@@ -14,9 +14,15 @@ type NewScheduleDefaults = { title: string; description?: string };
 export default function Calendar({
   currentDate,
   newScheduleDefaults,
+  onPrevMonth,
+  onNextMonth,
+  onToday,
 }: {
   currentDate: Date;
   newScheduleDefaults?: NewScheduleDefaults;
+  onPrevMonth?: () => void;
+  onNextMonth?: () => void;
+  onToday?: () => void;
 }) {
   const [selectedDate, setSelectedDate] = useAtom(selectedDateAtom);
   const [currentCalendar, setCurrentCalendar] = useState<Date[]>([]);
@@ -62,8 +68,27 @@ export default function Calendar({
 
   return (
     <View>
-      <Text>{currentDate.toLocaleDateString()}</Text>
-      <Text>캘린더</Text>
+      <View
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          gap: 12,
+          marginBottom: 8,
+        }}
+      >
+        <Pressable onPress={onPrevMonth} style={{ padding: 8 }}>
+          <Text>{"<"}</Text>
+        </Pressable>
+        <Text style={{ fontSize: 16, fontWeight: "600" }}>
+          {currentDate.getFullYear()}년 {currentDate.getMonth() + 1}월
+        </Text>
+        <Pressable onPress={onNextMonth} style={{ padding: 8 }}>
+          <Text>{">"}</Text>
+        </Pressable>
+        <Pressable onPress={onToday} style={{ padding: 8, marginLeft: 8 }}>
+          <Text>오늘</Text>
+        </Pressable>
+      </View>
       <CalendarGrid
         days={currentCalendar}
         currentDate={currentDate}

@@ -30,7 +30,20 @@ export default function CalendarBoard() {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <Calendar currentDate={currentDate} />
+      <Calendar
+        currentDate={currentDate}
+        onPrevMonth={() =>
+          setCurrentDate(
+            (prev) => new Date(prev.getFullYear(), prev.getMonth() - 1, 1)
+          )
+        }
+        onNextMonth={() =>
+          setCurrentDate(
+            (prev) => new Date(prev.getFullYear(), prev.getMonth() + 1, 1)
+          )
+        }
+        onToday={() => setCurrentDate(new Date())}
+      />
       <ScheduleList schedules={selectedSchedule} />
       <View style={{ position: "absolute", right: 16, bottom: 24 }}>
         <Pressable
