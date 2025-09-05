@@ -1,4 +1,5 @@
 import Calendar from "@/components/calendar/Calendar";
+import FAB from "@/components/common/FAB";
 import ScheduleList from "@/components/schedule/ScheduleList";
 import { schedulesAtom, selectedDateAtom } from "@/store/atoms";
 import { ScheduleDate } from "@/types/ScheduleDate";
@@ -6,11 +7,10 @@ import { formatYmdLocal } from "@/utils/date";
 import { useRouter } from "expo-router";
 import { useAtom } from "jotai";
 import { useEffect, useState } from "react";
-import { Pressable, SafeAreaView, Text, View } from "react-native";
-
+import { SafeAreaView, View } from "react-native";
 export default function CalendarBoard() {
-  const [selectedDate, setSelectedDate] = useAtom(selectedDateAtom);
-  const [schedules, setSchedules] = useAtom(schedulesAtom);
+  const [selectedDate] = useAtom(selectedDateAtom);
+  const [schedules] = useAtom(schedulesAtom);
 
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedSchedule, setSelectedSchedule] = useState<ScheduleDate[]>([]);
@@ -47,24 +47,7 @@ export default function CalendarBoard() {
       />
       <ScheduleList schedules={selectedSchedule} />
       <View style={{ position: "absolute", right: 16, bottom: 24 }}>
-        <Pressable
-          onPress={() => router.push("/modal")}
-          style={{
-            width: 56,
-            height: 56,
-            borderRadius: 28,
-            backgroundColor: "#1976d2",
-            alignItems: "center",
-            justifyContent: "center",
-            shadowColor: "#000",
-            shadowOpacity: 0.2,
-            shadowRadius: 6,
-            shadowOffset: { width: 0, height: 3 },
-            elevation: 4,
-          }}
-        >
-          <Text style={{ color: "#fff", fontSize: 28, marginTop: -2 }}>+</Text>
-        </Pressable>
+        <FAB onPress={() => router.push("/modal")} />
       </View>
     </SafeAreaView>
   );
