@@ -1,4 +1,7 @@
-# 📅 Calendar App
+ # 📅 Calendar App
+<img width="1027" height="525" alt="image" src="https://github.com/user-attachments/assets/a38ebe1b-b4fc-40bc-a577-6e35361866a0" />
+
+
 
 React Native와 Expo를 사용하여 개발된 캘린더 및 일정 관리 앱입니다.
 
