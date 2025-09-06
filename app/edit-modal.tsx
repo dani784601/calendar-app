@@ -4,7 +4,6 @@ import { useRouter } from "expo-router";
 import { useAtom } from "jotai";
 import { useState } from "react";
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
-import DatePicker from "react-native-date-picker";
 
 export default function EditModal() {
   const router = useRouter();
@@ -53,12 +52,7 @@ export default function EditModal() {
         multiline
         style={[styles.input, styles.textarea]}
       />
-      <DatePicker
-        locale="ko"
-        date={date}
-        mode="date"
-        onDateChange={onChangeDate}
-      />
+
       <View style={styles.actions}>
         <Pressable onPress={() => router.back()} style={styles.actionBtn}>
           <Text>취소</Text>
